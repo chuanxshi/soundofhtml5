@@ -1,0 +1,28 @@
+/* Contain floats: nicolasgallagher.com/micro-clearfix-hack/ */ 
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }
+body { 
+  background: #E5EFF8;
+  font-family:verdana;
+  color:#555;
+}
+
+h1 {
+  text-shadow:0px 5px 1px #ff6600,0px 4px 1px #ff6600,1px 4px 1px #ff6600,2px 4px 1px #ff6600,3px 3px 1px #ff6600,4px 2px 1px #ff6600,4px 1px 1px #ff6600,4px 0px 1px #ff6600,5px 0px 1px #ff6600,4px -1px 1px #ff6600,4px -2px 1px #ff6600,4px -3px 1px #ff6600,3px -4px 1px #ff6600,2px -5px 1px #ff6600,1px -5px 1px #ff6600,0px -5px 1px #ff6600,-1px -5px 1px #ff6600,-2px -5px 1px #ff6600,-3px -5px 1px #ff6600,-4px -4px 1px #ff6600,-5px -3px 1px #ff6600,-5px -2px 1px #ff6600,-5px -1px 1px #ff6600,-5px 0px 1px #ff6600,-5px 1px 1px #ff6600,-5px 2px 1px #ff6600,-4px 3px 1px #ff6600,-3px 4px 1px #ff6600,-2px 4px 1px #ff6600,-1px 4px 1px #ff6600;
+  color: #fff;
+  font-size: 300%;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.5;
+}
+section {width:800px; height:500px; background:#fff; margin:0 auto; padding:15px;}
+figure {margin:0; padding:0; display:block; width:250px; float:left; margin-left:10px;margin-top:10px;
+border:2px solid #ccc;
+-webkit-border-radius: 10px;
+-moz-border-radius: 10px;
+border-radius: 10px;}
+figure img {display:block; margin-top:10px; margin-bottom:10px;}
+figcaption {text-align:center; color:#555;}
+a {text-decoration:none; }
+h2 {margin:0; padding:0; padding-bottom:20px; font-size:16px;}

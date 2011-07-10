@@ -1,0 +1,120 @@
+﻿<!doctype html>
+<html>
+<head>
+<style>
+#graphPixels, #reflection {
+  width:520px; 
+  height:200px; 
+  position:relative;
+}
+#reflection {
+  border-top:1px solid #FECA00;
+}
+#screen {
+  position:relative; 
+  margin:0 auto; 
+  width:520px; 
+}
+#graphPixels div {width:6px; height:6px; background:#FECA00; position:absolute; bottom:0; left:0;}
+#reflection div{width:6px; height:6px; background:#FECA00; position:absolute; top:0; left:0;}
+.btn {
+  color:#fff;
+  background-color: #D76202;
+  height: 50px;
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  width: 50px;
+  text-align:center;
+  line-height:50px;
+  cursor: pointer;
+  cursor: hand;
+}
+#play {margin-right:15px; margin-left:160px;}
+#pause, #play {float:left;}
+#control {width:445px; height:200px;  margin:10px auto;}
+#overlay{ 
+  position:absolute;
+  top:200px;
+  left:0;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.2)), to(rgba(255,255,255,1)));
+  width:520px;
+  height:200px;
+}
+</style>
+</head>
+<body>
+<div id="screen">
+<div id="graphPixels">
+</div>
+<div id="reflection">
+ 
+</div>
+  <div id="overlay">
+  </div>
+</div>
+
+<div id="control">
+  <div id="play" class="btn">play</div>
+  <div id="pause" class="btn">pause</div>
+</div>
+<script src="script/soundmanager2-jsmin.js"></script>
+<script>
+var a='<div></div>';
+for (var i=0; i<256; i++) {
+  a = a+'<div></div>';
+}
+document.getElementById('graphPixels').innerHTML=a;
+document.getElementById('reflection').innerHTML=a;
+var graphPixels = document.getElementById('graphPixels').getElementsByTagName('div');
+
+
+
+var soundObject;
+function initSoundObject() {
+	soundManager.flashVersion = 9;
+	soundManager.url = 'swf/';
+	soundManager.useHighPerformance = true;
+	soundManager.debugMode = false; // disable debug mode
+ 
+	// When soundmanager has finished loading, loud our mp3
+	soundManager.onready(function() {
+	  // Ready to use; soundManager.createSound() etc. can now be called.
+		soundObject = soundManager.createSound({
+			id: 'mySound',
+			url: 'demos.mp3',
+			autoLoad: true,
+			autoPlay: false,
+			usePeakData: false,
+			useWaveformData: false,
+			useEQData: true,
+			volume: 100
+		});
+    
+    document.getElementById('pause').onclick = function () {
+      soundObject.pause('mySound');
+    }
+    
+    document.getElementById('play').onclick = function () {
+      soundObject.play({
+        whileplaying:function() {
+          var gScale = 32;
+          //console.log("num: "+this.eqData.left[10]*gScale);
+          var gPixels = document.getElementById('graphPixels').getElementsByTagName('div');
+          var rPixels = document.getElementById('reflection').getElementsByTagName('div');
+          
+          for (var i=0; i<50; i++) {
+            gPixels[i].style.height = Math.ceil(this.eqData.left[i]*gScale)*5+'px';
+            gPixels[i].style.left = i*10+'px';
+            rPixels[i].style.height = Math.ceil(this.eqData.left[i]*gScale)*5+'px';
+            rPixels[i].style.left = i*10+'px';
+          }
+        }
+      });
+    }
+	});
+}
+
+initSoundObject();
+</script>
+</body>
+</html>

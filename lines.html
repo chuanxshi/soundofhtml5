@@ -1,0 +1,100 @@
+﻿<!doctype html>
+<html>
+<head>
+<style>
+body {font-family:verdana; font-size:12px;}
+#screen {width:445px; height:200px;  margin:0px auto; margin-top:100px;}
+#control {width:445px; height:200px;  margin:10px auto;}
+#left, #right {
+  width:220px;
+  height:200px; 
+  position:relative;
+  float:left;
+}
+#left {
+  border-right:5px solid grey;
+}
+#left div, #right div {width:0px; height:5px; background:grey; position:absolute; top:0; right:0;}
+#right div {left:0;}
+.btn {
+  background-color: #D76202;
+  color:white;
+  height: 50px;
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  width: 50px;
+  text-align:center;
+  line-height:50px;
+  cursor: pointer;
+  cursor: hand;
+}
+#play {margin-right:15px; margin-left:165px;}
+#pause, #play {float:left;}
+</style>
+</head>
+<body>
+<div id="screen">
+  <div id="left">
+  </div>
+  <div id="right">
+  </div>
+</div>
+<div id="control">
+  <div id="play" class="btn">play</div>
+  <div id="pause" class="btn">pause</div>
+</div>
+
+<script src="script/soundmanager2-jsmin.js"></script>
+<script>
+var a='<div></div>';
+for (var i=0; i<256; i++) {
+  a = a+'<div></div>';
+}
+document.getElementById('left').innerHTML=a;
+document.getElementById('right').innerHTML=a;
+var soundObject;
+function initSoundObject() {
+	soundManager.flashVersion = 9;
+	soundManager.url = 'swf/';
+	soundManager.useHighPerformance = true;
+	soundManager.debugMode = false; // disable debug mode
+ 
+	// When soundmanager has finished loading, loud our mp3
+	soundManager.onready(function() {
+	  // Ready to use; soundManager.createSound() etc. can now be called.
+		soundObject = soundManager.createSound({
+			id: 'mySound',
+			url: 'demos.mp3',
+			autoLoad: true,
+			autoPlay: false,
+			usePeakData: false,
+			useWaveformData: false,
+			useEQData: true,
+			volume: 100
+		});
+    
+    document.getElementById('pause').onclick = function () {
+      soundObject.pause('mySound');
+    }
+    
+    document.getElementById('play').onclick = function () {
+      soundObject.play({
+        whileplaying:function() {
+          var gScale = 300;
+          var gLPixels = document.getElementById('left').getElementsByTagName('div');
+          var gRPixels = document.getElementById('right').getElementsByTagName('div');
+          for (var i=0; i<30; i++) {
+            gLPixels[i].style.top = i*6+3+'px';
+            gLPixels[i].style.width = ((Math.ceil(this.eqData.left[i]*gScale)))+'px';
+            gRPixels[i].style.top = i*6+3+'px';
+            gRPixels[i].style.width = ((Math.ceil(this.eqData.right[i]*gScale)))+'px';
+          }
+        }
+      });
+    }
+	});
+}
+initSoundObject();
+</script>
+</body>
+</html>
