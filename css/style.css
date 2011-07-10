@@ -16,7 +16,9 @@ h1 {
   text-align: center;
   line-height: 1.5;
 }
-section {width:800px; height:500px; background:#fff; margin:0 auto; padding:15px;}
+body {width:830px; margin:0 auto; }
+section { height:500px; background:#fff; padding:15px; -webkit-border-radius: 10px;
+-moz-border-radius: 10px;}
 figure {margin:0; padding:0; display:block; width:250px; float:left; margin-left:10px;margin-top:10px;
 border:2px solid #ccc;
 -webkit-border-radius: 10px;
@@ -24,5 +26,20 @@ border:2px solid #ccc;
 border-radius: 10px;}
 figure img {display:block; margin-top:10px; margin-bottom:10px;}
 figcaption {text-align:center; color:#555;}
-a {text-decoration:none; }
+a {text-decoration:none; color:#555;}
 h2 {margin:0; padding:0; padding-bottom:20px; font-size:16px;}
+footer {font-size:11px; text-align:center; margin-top:1em;}
+
+.btn {
+  color:#fff;
+  background-color: #D76202;
+  height: 50px;
+  -moz-border-radius:25px;
+  -webkit-border-radius: 25px;
+  width: 50px;
+  text-align:center;
+  line-height:50px;
+  cursor: pointer;
+  cursor: hand;
+  font-size:12px;
+}

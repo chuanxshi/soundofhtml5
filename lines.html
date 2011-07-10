@@ -1,100 +1,102 @@
 ﻿<!doctype html>
 <html>
 <head>
-<style>
-body {font-family:verdana; font-size:12px;}
-#screen {width:445px; height:200px;  margin:0px auto; margin-top:100px;}
-#control {width:445px; height:200px;  margin:10px auto;}
-#left, #right {
-  width:220px;
-  height:200px; 
-  position:relative;
-  float:left;
-}
-#left {
-  border-right:5px solid grey;
-}
-#left div, #right div {width:0px; height:5px; background:grey; position:absolute; top:0; right:0;}
-#right div {left:0;}
-.btn {
-  background-color: #D76202;
-  color:white;
-  height: 50px;
-  -moz-border-radius:25px;
-  -webkit-border-radius: 25px;
-  width: 50px;
-  text-align:center;
-  line-height:50px;
-  cursor: pointer;
-  cursor: hand;
-}
-#play {margin-right:15px; margin-left:165px;}
-#pause, #play {float:left;}
-</style>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Sound of HTML5 - lines</title>
+  <meta name="description" content="Sound of HTML5, CSS3 and JavaScript Audio API">
+  <meta name="author" content="Shi Chuan">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+  #screen {width:445px; height:200px;  margin:0px auto; margin-top:100px;}
+  #control {width:445px; height:200px;  margin:10px auto;}
+  #left, #right {
+    width:220px;
+    height:200px; 
+    position:relative;
+    float:left;
+  }
+  #left {
+    border-right:5px solid grey;
+  }
+  #left div, #right div {width:0px; height:5px; background:grey; position:absolute; top:0; right:0;}
+  #right div {left:0;}
+  #play {margin-right:15px; margin-left:165px;}
+  #pause, #play {float:left;}
+  </style>
 </head>
 <body>
-<div id="screen">
-  <div id="left">
+  <header>
+    <h1>Sound of HTML5</h1>
+  </header>
+  <section>
+  <a href="../soundofhtml5/index.html">Home</a> -> lines
+  <div id="screen">
+    <div id="left">
+    </div>
+    <div id="right">
+    </div>
   </div>
-  <div id="right">
+  <div id="control">
+    <div id="play" class="btn">play</div>
+    <div id="pause" class="btn">pause</div>
   </div>
-</div>
-<div id="control">
-  <div id="play" class="btn">play</div>
-  <div id="pause" class="btn">pause</div>
-</div>
-
-<script src="script/soundmanager2-jsmin.js"></script>
-<script>
-var a='<div></div>';
-for (var i=0; i<256; i++) {
-  a = a+'<div></div>';
-}
-document.getElementById('left').innerHTML=a;
-document.getElementById('right').innerHTML=a;
-var soundObject;
-function initSoundObject() {
-	soundManager.flashVersion = 9;
-	soundManager.url = 'swf/';
-	soundManager.useHighPerformance = true;
-	soundManager.debugMode = false; // disable debug mode
- 
-	// When soundmanager has finished loading, loud our mp3
-	soundManager.onready(function() {
-	  // Ready to use; soundManager.createSound() etc. can now be called.
-		soundObject = soundManager.createSound({
-			id: 'mySound',
-			url: 'demos.mp3',
-			autoLoad: true,
-			autoPlay: false,
-			usePeakData: false,
-			useWaveformData: false,
-			useEQData: true,
-			volume: 100
-		});
-    
-    document.getElementById('pause').onclick = function () {
-      soundObject.pause('mySound');
-    }
-    
-    document.getElementById('play').onclick = function () {
-      soundObject.play({
-        whileplaying:function() {
-          var gScale = 300;
-          var gLPixels = document.getElementById('left').getElementsByTagName('div');
-          var gRPixels = document.getElementById('right').getElementsByTagName('div');
-          for (var i=0; i<30; i++) {
-            gLPixels[i].style.top = i*6+3+'px';
-            gLPixels[i].style.width = ((Math.ceil(this.eqData.left[i]*gScale)))+'px';
-            gRPixels[i].style.top = i*6+3+'px';
-            gRPixels[i].style.width = ((Math.ceil(this.eqData.right[i]*gScale)))+'px';
-          }
-        }
+  </section>
+  <footer>
+  by <a href="http://twitter.com/#!/shichuan">@shichuan</a>
+  </footer>
+  <script src="script/soundmanager2-jsmin.js"></script>
+  <script>
+  var a='<div></div>';
+  for (var i=0; i<256; i++) {
+    a = a+'<div></div>';
+  }
+  document.getElementById('left').innerHTML=a;
+  document.getElementById('right').innerHTML=a;
+  var soundObject;
+  function initSoundObject() {
+    soundManager.flashVersion = 9;
+    soundManager.url = 'swf/';
+    soundManager.useHighPerformance = true;
+    soundManager.debugMode = false; // disable debug mode
+   
+    // When soundmanager has finished loading, loud our mp3
+    soundManager.onready(function() {
+      // Ready to use; soundManager.createSound() etc. can now be called.
+      soundObject = soundManager.createSound({
+        id: 'mySound',
+        url: 'demos.mp3',
+        autoLoad: true,
+        autoPlay: false,
+        usePeakData: false,
+        useWaveformData: false,
+        useEQData: true,
+        volume: 100
       });
-    }
-	});
-}
-initSoundObject();
-</script>
+      
+      document.getElementById('pause').onclick = function () {
+        soundObject.pause('mySound');
+      }
+      
+      document.getElementById('play').onclick = function () {
+        soundObject.play({
+          whileplaying:function() {
+            var gScale = 300;
+            var gLPixels = document.getElementById('left').getElementsByTagName('div');
+            var gRPixels = document.getElementById('right').getElementsByTagName('div');
+            for (var i=0; i<30; i++) {
+              gLPixels[i].style.top = i*6+3+'px';
+              gLPixels[i].style.width = ((Math.ceil(this.eqData.left[i]*gScale)))+'px';
+              gRPixels[i].style.top = i*6+3+'px';
+              gRPixels[i].style.width = ((Math.ceil(this.eqData.right[i]*gScale)))+'px';
+            }
+          }
+        });
+      }
+    });
+  }
+  initSoundObject();
+  </script>
+  <a href="https://github.com/shichuan/soundofhtml5/tree/gh-pages"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://gs1.wac.edgecastcdn.net/80460E/assets/img/6429057dfef9e98189338d22e7f6646c6694f032/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6f72616e67655f6666373630302e706e67" alt="Fork me on GitHub"></a>
 </body>
 </html>
